@@ -266,9 +266,166 @@
 
   console.log(bookFinding(["a", "b"])("a"));
 
+  // Warm-up
+
+  // 1. Matching values
+    //    Write a function that, if given two arguments that match, will return true, otherwise will return false. For example:
+
+    // isMatch(1, 1) // true
+    // isMatch('dog', 'cat') // false
+    // isMatch(1, 2) // false
+    // isMatch(1, 'dog') // false
+
+    const isMatch = (a, b) => {
+      return a === b;
+    }
+
+    console.log(isMatch('dog', 'dog')) // true
+
+    // 2. String repeater
+    //    Write a function that repeats a string a given number of times, for example:
+    const repeatString = (string, number) => {
+      return string.repeat(number)
+    }
+
+    console.log(repeatString('hey', 3)) // returns 'heyheyhey'
+
+
+    // 3. Sum All
+    //    Write a function called sumAll that, if given two arguments, will return the sum of every number in between them:
+    // sumAll(1, 4) // 1 + 2 + 3 + 4 which is 10
+
+    const sumAll = (first, last) => {
+      let sum = 0;
+
+      for (let i = first; i <= last; i++) {
+        sum += i;
+      }
+      return sum;
+    }
+
+    console.log(sumAll(1, 4))
+
+    // 4. Count the Vowels
+    //    Write a function that, given a word, will print out the number of vowels in that word.For example:
+
+    const vowels = ['a', 'e', 'i', 'o', 'u']
+
+    const countVowels = (word) => {
+      const newString = word.toLowerCase();
+      let counter = 0
+
+      for (let i = 0; i < newString.length; i++) {
+        if (vowels.includes(newString[i])) {
+          counter++
+        }
+      }
+      return counter;
+    }
+
+    console.log(countVowels('diamond')) // 3
+
+    // 5. Create a function that, given a word, will reverse it. For example:
+    // reverse("pizza")  // azzip
+
+    const reverse = (word) => {
+      return word.split('').reverse().join('');
+    }
+
+    console.log(reverse("pizza"))
+
+    // 6. Create a function that detects if a word is a palindrome.
+
+    function isPalindrome(str) {
+      // replaces any character that's not letter, number or underscore and replaces with empty string. Then transforms it to lowercase.
+      str = str.replace(/\W/g, '').toLowerCase();
+      // if the string then equals the split string, reversed and then joined, then it will return true. 
+      return (str == str.split('').reverse().join(''));
+    }
+
+    // 7. Write a function that, if given a string, will capitalize all of the words in that string
+
+    const capitalize = (sentence) => {
+      // split the sentence into words
+      const splitSentence = sentence.split(' ');
+      // create an array (newSentence) with each word as an item in that array (word)
+      // map over that array
+      const newSentence = splitSentence.map((word) => {
+        // take the first character in each word and upperCase it. 
+        // add the remainder of the word back on without the first letter
+        return word.charAt(0).toUpperCase() + word.slice(1)
+      })
+      // Convert the seperate words back into a full string seperated by a space
+      const capitalizedSentence = newSentence.join(' ')
+      return capitalizedSentence;
+    }
+    console.log(capitalize('the quick brown fox jumped over the lazy dog'))
+
+    // 8. Create an object that stores the scrabble letters by score
+
+    const scoring = {
+      'eaionrtlsu': 1,
+      'dg': 2,
+      'bcmp': 3,
+      'fhvwy': 4,
+      'k': 5,
+      'jx': 8,
+      'qz': 10,
+    }
+
+    const scrabbleScore = (word) => {
+      // Create a place to hold the final score
+      let finalScore = 0;
+      // Create an array from the word string
+      const wordArr = [...word];
+      // loop over that new array
+      wordArr.forEach(letter => {
+        // the variable set here is going to be the keys/properties from the scoring object
+        // ie. 'eaionrtlsu', 'dg',
+        for (set in scoring) {
+          // if that particular string of characters contains the letter, 
+          if (set.includes(letter)) {
+            // add to the final score
+            // scoring[set] is accessing a value in the score function
+            finalScore = scoring[set] + finalScore;
+          }
+        }
+      })
+      return finalScore;
+    }
+
+    console.log(scrabbleScore('quagmire'));
+
+    // What will be printed to the console?
+
+    // var arr1 = "john".split('');
+    // var arr2 = arr1.reverse();
+    // var arr3 = "jones".split('');
+    // arr2.push(arr3);
+    // console.log("array 1: length=" + arr1.length + " last=" + arr1.slice(-1));
+    // console.log("array 2: length=" + arr2.length + " last=" + arr2.slice(-1)); 
+
+    arr1 = ['j', 'o', 'h', 'n']
+    arr2 = ['n', 'h', 'o', 'j']
+    arr3 = ['j', 'o', 'n', 'e', 's']
+
+    ['n', 'h', 'o', 'j', ['j', 'o', 'n', 'e', 's']]
+
+// .slice cuts out only that element in the array and keeps it 
+
+// array 1: length= 5 last = ['j', 'o', 'n', 'e', 's']
+// array 2: length= 5 last = ['j', 'o', 'n', 'e', 's']
+
+// console.log(1 +  "2" + "2"); 122
+// console.log(1 + +"2" + "2"); 32
+// console.log(1 + -"1" + "2"); 02
+// console.log(+"1" + "1" + "2"); 112
+// console.log("A" - "B" + "2"); NaN2
+// console.log("A" - "B" + 2); NaN
+
   // tips //
 
   // If you don't finish your solution, present a vision of how the solution could be made
-  // being able to articulate relationships between data types
+  // be able to articulate the relationships between data types
 
 </script>
