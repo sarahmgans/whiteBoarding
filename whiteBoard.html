@@ -1,0 +1,274 @@
+<script>
+// 1. define a function that takes an array of strings, and returns the most commonly occurring string that array.
+
+  // select the first element of the array and compare it with every element from then on. 
+  // increment the counter every time the same element occurs again
+  // mf is kept to keep track of the maximum frequency. Compare the elements frequency with the mf and update item and mf.
+
+  var array = ['a', 'a', 'a', 'a', 'b', 'a'];
+  var mf = 1 // default maximum frequency
+  var counter = 0;
+  var item; // to store item with maximum frequency
+  for(var i=0; i<array.length; i++) // select current element
+  {
+    for(var j=i; j<array.length; j++) // loop through the next elements in the array to compare and calculate frequency of current element 
+    {
+      if(array[i] == array[j]) // see if the element occurs again in the array 
+      {
+        counter++;
+      } else if(mf < counter) // compare current items frequency with max frequency
+      {
+        mf = counter; // if counter is larger than mf, store counter in mf for upcoming elements
+        item = array[i];
+      }
+    }
+  }
+  m = 0;
+
+  // or using reduce
+
+  var arr = ['sarah', 'ab', 'sarah', 'sarah', 'ab', 'ab', 'sarah'];
+  var newArr = arr.slice().sort(), most = [undefined, 0], counter = 0;
+
+  newArr.reduce(function(old, chr){
+    old == chr 
+      ? ++counter > most[1] && (most = [chr, counter])
+      : (counter = 1)
+      return chr
+  });
+
+  alert(most[0] + " ( " +most[1]+" times )");
+
+    // Find the max entry in the new object, return the key
+    var maxEntry, maxValue = 0;
+    for (commonString in commonStrings) {
+      if (commonStrings[commonString] > maxValue) {
+        maxValue = commonStrings[commonString];
+        maxEntry = commonString;
+      }
+    }
+
+    return maxEntry;
+
+  var strings = [
+    'Herman',
+    'Mochi',
+    'Herman',
+    'Bee',
+    'Bee',
+    'Virginia',
+    'Amelia',
+    'Jeff',
+    'Amelia',
+    'Virginia',
+    'Virginia',
+    'Herman',
+    'Mochi',
+    'Virginia'
+  ];
+
+  console.log(mostCommonString(strings));
+
+  // 4. Considering the following code, what would be printed in the console?
+  (function() {
+    var a = b = 5;
+  }) ();
+
+  console.log(b);
+  5
+  // var a = b;
+  // b = 5
+  // because no expression declaring b, it becomes a global variable and is still in score. 
+  // a is a local variable to the self-executing anonymous function, so it is not defined when the function is calls itself. 
+
+  // 5. What’s the result of executing this code and why.
+  function test() {
+    console.log(a);
+    console.log(foo());
+  }
+
+  var a = 1;
+  function foo() {
+    return 2;
+  }
+
+  test();
+
+  1 & 2
+  // a is a global variable, so when test() runs it prints it in the console. test also logs foo() which returns 2. 
+
+  // 6. What is the result of the following code ? Explain your answer.
+
+  var fullname = 'John Doe';
+  var obj = {
+    fullname: 'Colin Ihrig',
+    prop: {
+      fullname: 'Aurelio',
+      getFullname: function() {
+        return this.fullname;
+      }
+    }
+  }
+
+  console.log(obj.prop.getFullname());
+  // Aurelio
+
+  var test = obj.prop.getFullname;
+
+  console.log(test());
+  // John Doe
+
+  // In this case, the this that's returned in the getFullname function is 'John Doe', as the variable test is declared in the global scope and so its scope is the global scope. In the global scope, the only fullname that's accessible is 'John Doe'. 
+
+  // 2. Assuming the following HTML, add functionality for an action to occur when a user clicks on of the list items:
+
+  // <ul id="todo-app">
+  //   <li class="item">Walk the dog</li>
+  //   <li class="item">Pay bills</li>
+  //   <li class="item">Make dinner</li>
+  //   <li class="item">Code for one hour</li>
+  // </ul>
+
+  const listItem = document.querySelector('li')
+
+  const handleAction = (e) => {
+    console.log(e);
+  }
+
+  listItem.addEventListener('click', handleAction) 
+
+  // 7. I want this code to log out “hey amy”, but it logs out “hey arnold” - why?
+
+  function greet(person) {
+    // object literal
+    if (person == { name: 'amy' }) {
+      return 'hey amy'
+    } else {
+      return 'hey arnold'
+    }
+  }
+  greet({ name: 'amy' })
+
+  // when comparing two objects with equality or strict equality, JS is going to compare the related internal references. 
+  // the objects have the same properties/value but they are pointing to different points in memory.
+  // if it were (person.name === 'amy') instead of { name: 'amy' } then it would true, as it would be a property on the object. 
+  
+  // 8. “I want this code to log out “doggo”, but it logs out undefined!”
+
+  let dog = {
+      name: 'doggo',
+      sayName() {
+        console.log(this.name)
+      }
+    }
+
+    let sayName = dog.sayName
+    sayName()
+
+    // let sayName = dog.sayName.bind(dog), this would fix it, as this assures that this will always be set correctly when calling sayName().
+  
+    // In JavaScript, this is dynamically scope, so that this inside a function is defined based on the way you call that function. 
+    // unless you bind this, this is generally set to what is left of the dot when you call the function.
+    // since here there is nothing left of the when sayName() is called, this is set to the global object, or undefined if we're in strict mode. 
+  
+  // 9. I want my dog to bark(), but instead I get an error. Why?
+
+  function Dog(name) {
+      this.name = name
+    }
+    Dog.bark = function () {
+      console.log(this.name + ' says woof')
+    }
+    let fido = new Dog('fido')
+    fido.bark()
+
+  // this doesn't work because when you new a function in JS, it creates a new objects whose methods are inherited from the prototype of the function you new'd
+  // this is called prototypal inheritance
+  // for the new Dog to inherit the bark, we need to move back to Dog's prototype like so:
+
+    function Dog(name) {
+        this.name = name;
+      }
+      Dog.prototype.bark = function () {
+        console.log(this.name + ' says woof')
+      }
+      let fido = new Dog('fido')
+      fido.bark()
+
+    // you could also do:
+    
+    function Dog(name) {
+        this.name = name;
+        this.bark = function () {
+          console.log(this.name + ' says woof')
+        }
+      }
+      let fido = new Dog('fido')
+      fido.bark()
+
+    
+  // 10. Why does this code return the results that it does ?
+  
+  function isBig(thing) {
+      if (thing == 0 || thing == 1 || thing == 2) {
+        return false
+      }
+      return true
+    }
+    isBig(1)    // false
+    isBig([2])  // false
+    isBig([3])  // true
+
+    // we used the simple equality operator == instead of the strict comparison. 
+    // with this operator it isn't necessary to compare the same type. 
+    // JS converts [2] and [3] to numbers before comparing them. 
+
+  // 11. I want this code to log out the numbers 0, 1, 2, 3 in that order, but it doesn’t do what I expect. 
+
+  for (var i = 0; i < 4; i++) {
+      setTimeout(() => console.log(i), 0)
+    }
+
+  // there are two types of variable declarations in JS, block-level (let, const, catch clauses) and function-level (var).
+  // var here declares a single variable that is shared by all four calls to setTimout, so by the time the first setTimout is fired, the loop has already run four times and i = 4.
+  // to fix this, we make sure that each setTimout has its own instance of i by changing var to let. 
+  // let is block-scoped, so it will create a new variable binding for every iteration of the for loop. 
+  // in each iteration, a new variable with the updated value is being created in the memory. 
+  // taking the global scope with var of i because it leaks out.
+  // using let ensures that i is restricted to inside of the block-level scope. 
+  // closures are a restriction of scope
+
+    // for (var i = 0; i < 4; i++) {
+    // (function (i) {
+    //   setTimeout(function () { console.log(i); }, 0);
+    // })(i);
+    // }
+
+  // 12. Write a function mul(x)(y)(z) to multiply x, y, and z. 
+
+  function mul(x) {
+      return function (y) {
+        return function (z) {
+          return x * y * z;
+        }
+      }
+    } console.log(mul(2)(3)(4)); // output is 24
+
+  const mulArrow = x => y => z => x * y * z;
+  console.log(mulArrow(2)(3)(4)); // output is 24
+
+  // Book finding array 
+  const bookFinding = (books) => (find) => {
+    return books.filter((book) => {
+    return book == find
+    });
+  };
+
+  console.log(bookFinding(["a", "b"])("a"));
+
+  // tips //
+
+  // If you don't finish your solution, present a vision of how the solution could be made
+  // being able to articulate relationships between data types
+
+</script>
